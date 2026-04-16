@@ -45,40 +45,44 @@
    // 1. MENU PRINCIPAL - Feito por: HENRY (Líder)
    // ============================================================
    function exibirMenu() {
-       console.log(`
-       --- 📝 GERENCIADOR DE TAREFAS ---
-       1. Adicionar Tarefa (Wesley)
-       2. Listar Tarefas (Cabelo)
-       3. Editar Tarefa (Henry)
-       4. Marcar como Concluída (Cabelo)
-       5. Sair
-       `);
-   
-       rl.question('Escolha uma opção: ', (opcao) => {
-           switch (opcao) {
-               case '1':
-                   adicionarTarefa();
-                   break;
-               case '2':
-                   listarTarefas();
-                   break;
-               case '3':
-                   editarTarefa();
-                   break;
-               case '4':
-                   concluirTarefa();
-                   break;
-               case '5':
-                   console.log('Encerrando programa... Até logo!');
-                   rl.close();
-                   break;
-               default:
-                   console.log('⚠️ Opção inválida! Tente novamente.');
-                   exibirMenu(); // Recursão (Aula Function)
-                   break;
-           }
-       });
-   }
+    console.log(`
+    --- 📝 GERENCIADOR DE TAREFAS ---
+    1. Adicionar Tarefa (Wesley)
+    2. Listar Tarefas (Cabelo)
+    3. Editar Tarefa (Henry)
+    4. Marcar como Concluída (Cabelo)
+    5. Excluir Tarefa (Wesley)
+    6. Sair
+    `);
+
+    rl.question('Escolha uma opção: ', (opcao) => {
+        switch (opcao) {
+            case '1':
+                adicionarTarefa();
+                break;
+            case '2':
+                listarTarefas();
+                break;
+            case '3':
+                editarTarefa();
+                break;
+            case '4':
+                concluirTarefa();
+                break;
+            case '5':
+                excluirTarefa(); // Nova opção do Wesley
+                break;
+            case '6':
+                console.log('Encerrando programa... Até logo!');
+                rl.close();
+                break;
+            default:
+                console.log('⚠️ Opção inválida! Tente novamente.');
+                exibirMenu();
+                break;
+        }
+    });
+}
    
    // ============================================================
    // 2. ADICIONAR TAREFA - Feito por: WESLEY (peão)
