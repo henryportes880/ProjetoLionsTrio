@@ -4,7 +4,7 @@ Projeto acadêmico desenvolvido para o curso da **Lions Startups (Turma da Noite
 
 ## 👥 Integrantes da Equipe
 - **Henry** (Líder / Setup / Edição)
-- **Wesley** (Adição de Tarefas)
+- **Wesley** (Adição de Tarefas e Exclusão)
 - **Cabelo** (Listagem e Conclusão)
 
 ## 🚀 Como executar o projeto

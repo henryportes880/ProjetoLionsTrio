@@ -31,20 +31,20 @@
    - Condicionais e Lógica (Aula Condicionais)
    ========================================================================== */
 
-   const readline = require('readline');
+const readline = require('readline');
 
-   const rl = readline.createInterface({
-       input: process.stdin,
-       output: process.stdout
-   });
-   
-   // Vetor global de objetos - Armazenamento em memória (Aula Arrays/Objeto)
-   let tarefas = [];
-   
-   // ============================================================
-   // 1. MENU PRINCIPAL - Feito por: HENRY (Líder)
-   // ============================================================
-   function exibirMenu() {
+const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout
+});
+
+// Vetor global de objetos - Armazenamento em memória (Aula Arrays/Objeto)
+let tarefas = [];
+
+// ============================================================
+// 1. MENU PRINCIPAL - Feito por: HENRY (Líder)
+// ============================================================
+function exibirMenu() {
     console.log(`
     --- 📝 GERENCIADOR DE TAREFAS ---
     1. Adicionar Tarefa (Wesley)
@@ -70,7 +70,7 @@
                 concluirTarefa();
                 break;
             case '5':
-                excluirTarefa(); // Nova opção do Wesley
+                excluirTarefa();
                 break;
             case '6':
                 console.log('Encerrando programa... Até logo!');
@@ -83,18 +83,37 @@
         }
     });
 }
-   
-   // ============================================================
-   // 2. ADICIONAR TAREFA - Feito por: WESLEY (peão)
-   // ============================================================
-   
-   // ============================================================
-   // 3. LISTAR TAREFAS - Feito por: CABELO (moça indefesa)
-   // ============================================================
-   function listarTarefas() {
-    console.log('\n--- Lista de Tarefas ---');
+
+// ============================================================
+// 2. ADICIONAR TAREFA - Feito por: WESLEY
+// ============================================================
+function adicionarTarefa() {
+    console.log('\n--- ➕ Adicionar Nova Tarefa ---');
+    rl.question('O que precisa ser feito (Lembrete)? ', (lembrete) => {
+        rl.question('Qual o prazo (ex: Amanhã, 20/10)? ', (prazo) => {
+            
+            // Criando o objeto da tarefa (Aula Objeto)
+            const novaTarefa = {
+                lembrete: lembrete,
+                prazo: prazo,
+                concluido: false // Inicia sempre como pendente
+            };
+
+            // Adicionando ao array (Aula Arrays)
+            tarefas.push(novaTarefa);
+            
+            console.log('✅ Tarefa adicionada com sucesso!');
+            exibirMenu();
+        });
+    });
+}
+
+// ============================================================
+// 3. LISTAR TAREFAS - Feito por: CABELO
+// ============================================================
+function listarTarefas() {
+    console.log('\n--- 📋 Lista de Tarefas ---');
     
-    // Verificação se o array está vazio (Aula Condicionais)
     if (tarefas.length === 0) {
         console.log('Nenhuma tarefa cadastrada até o momento.');
     } else {
@@ -106,61 +125,58 @@
     }
     exibirMenu();
 }
-   // ============================================================
-   // 4. EDITAR TAREFA - Feito por: HENRY (00)
-   // ============================================================
-   function editarTarefa() {
-       if (tarefas.length === 0) {
-           console.log('\n⚠️ Não há tarefas para editar.');
-           return exibirMenu();
-       }
-   
-       // Primeiro listamos para o usuário saber qual número escolher
-       console.log('\n--- Editar Tarefa ---');
-       tarefas.forEach((t, i) => console.log(`${i + 1}. ${t.lembrete}`));
-   
-       rl.question('\nDigite o número da tarefa que deseja editar: ', (num) => {
-           const index = Number(num) - 1; // Ajuste de índice (usuário começa do 1)
-   
-           // Validação se a posição existe (Aula Arrays/Logica)
-           if (index >= 0 && index < tarefas.length) {
-               rl.question('Novo texto do lembrete: ', (novoTexto) => {
-                   rl.question('Novo prazo: ', (novoPrazo) => {
-                       
-                       // Alterando propriedades do objeto (Aula Objeto)
-                       tarefas[index].lembrete = novoTexto;
-                       tarefas[index].prazo = novoPrazo;
-   
-                       console.log('✅ Tarefa atualizada!');
-                       exibirMenu();
-                   });
-               });
-           } else {
-               console.log('⚠️ Número inválido!');
-               exibirMenu();
-           }
-       });
-   }
-   
-   // ============================================================
-   // 5. CONCLUIR TAREFA - Feito por: CABELO
-   // ============================================================
-   function concluirTarefa() {
+
+// ============================================================
+// 4. EDITAR TAREFA - Feito por: HENRY
+// ============================================================
+function editarTarefa() {
+    if (tarefas.length === 0) {
+        console.log('\n⚠️ Não há tarefas para editar.');
+        return exibirMenu();
+    }
+
+    console.log('\n--- ✏️ Editar Tarefa ---');
+    tarefas.forEach((t, i) => console.log(`${i + 1}. ${t.lembrete}`));
+
+    rl.question('\nDigite o número da tarefa que deseja editar: ', (num) => {
+        const index = Number(num) - 1;
+
+        if (index >= 0 && index < tarefas.length) {
+            rl.question('Novo texto do lembrete: ', (novoTexto) => {
+                rl.question('Novo prazo: ', (novoPrazo) => {
+                    tarefas[index].lembrete = novoTexto;
+                    tarefas[index].prazo = novoPrazo;
+
+                    console.log('✅ Tarefa atualizada!');
+                    exibirMenu();
+                });
+            });
+        } else {
+            console.log('⚠️ Número inválido!');
+            exibirMenu();
+        }
+    });
+}
+
+// ============================================================
+// 5. CONCLUIR TAREFA - Feito por: CABELO
+// ============================================================
+function concluirTarefa() {
     if (tarefas.length === 0) {
         console.log('\n⚠️ Não há tarefas para concluir.');
         return exibirMenu();
     }
 
-    console.log('\n--- Marcar como Concluída ---');
+    console.log('\n--- ✔ Marcar como Concluída ---');
     tarefas.forEach((t, i) => {
-        if (!t.concluido) console.log(`${i + 1}. ${t.lembrete}`);
+        const status = t.concluido ? '(Já Concluída)' : '';
+        console.log(`${i + 1}. ${t.lembrete} ${status}`);
     });
 
     rl.question('\nDigite o número da tarefa que concluiu: ', (num) => {
         const index = Number(num) - 1;
 
         if (index >= 0 && index < tarefas.length) {
-            // Alterando a flag booleana para true
             tarefas[index].concluido = true;
             console.log('✔ Parabéns! Tarefa marcada como concluída.');
         } else {
@@ -169,9 +185,32 @@
         exibirMenu();
     });
 }
-   // ============================================================
-   // 6. EXCLUIR TAREFA - Feito por: WESLEY
-   // ============================================================-
-   
-   // Inicialização do Sistema
-   exibirMenu();
+
+// ============================================================
+// 6. EXCLUIR TAREFA - Feito por: WESLEY
+// ============================================================
+function excluirTarefa() {
+    if (tarefas.length === 0) {
+        console.log('\n⚠️ Não há tarefas para excluir.');
+        return exibirMenu();
+    }
+
+    console.log('\n--- 🗑️ Excluir Tarefa ---');
+    tarefas.forEach((t, i) => console.log(`${i + 1}. ${t.lembrete}`));
+
+    rl.question('\nDigite o número da tarefa que deseja REMOVER: ', (num) => {
+        const index = Number(num) - 1;
+
+        if (index >= 0 && index < tarefas.length) {
+            // Remove 1 elemento na posição 'index' (Aula Arrays)
+            tarefas.splice(index, 1);
+            console.log('❌ Tarefa removida com sucesso!');
+        } else {
+            console.log('⚠️ Número inválido!');
+        }
+        exibirMenu();
+    });
+}
+
+// Inicialização do Sistema
+exibirMenu();
