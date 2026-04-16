@@ -81,15 +81,29 @@
    }
    
    // ============================================================
-   // 2. ADICIONAR TAREFA - Feito por: WESLEY
+   // 2. ADICIONAR TAREFA - Feito por: WESLEY (peão)
    // ============================================================
    
    // ============================================================
-   // 3. LISTAR TAREFAS - Feito por: CABELO
+   // 3. LISTAR TAREFAS - Feito por: CABELO (moça indefesa)
    // ============================================================
-   
+   function listarTarefas() {
+    console.log('\n--- Lista de Tarefas ---');
+    
+    // Verificação se o array está vazio (Aula Condicionais)
+    if (tarefas.length === 0) {
+        console.log('Nenhuma tarefa cadastrada até o momento.');
+    } else {
+        // Uso OBRIGATÓRIO do forEach (Aula Laços)
+        tarefas.forEach((t, index) => {
+            const status = t.concluido ? '[V] Concluída' : '[ ] Pendente';
+            console.log(`${index + 1}. ${status} | Tarefa: ${t.lembrete} | Prazo: ${t.prazo}`);
+        });
+    }
+    exibirMenu();
+}
    // ============================================================
-   // 4. EDITAR TAREFA - Feito por: HENRY (Líder)
+   // 4. EDITAR TAREFA - Feito por: HENRY (00)
    // ============================================================
    function editarTarefa() {
        if (tarefas.length === 0) {
@@ -127,7 +141,30 @@
    // ============================================================
    // 5. CONCLUIR TAREFA - Feito por: CABELO
    // ============================================================
+   function concluirTarefa() {
+    if (tarefas.length === 0) {
+        console.log('\n⚠️ Não há tarefas para concluir.');
+        return exibirMenu();
+    }
 
+    console.log('\n--- Marcar como Concluída ---');
+    tarefas.forEach((t, i) => {
+        if (!t.concluido) console.log(`${i + 1}. ${t.lembrete}`);
+    });
+
+    rl.question('\nDigite o número da tarefa que concluiu: ', (num) => {
+        const index = Number(num) - 1;
+
+        if (index >= 0 && index < tarefas.length) {
+            // Alterando a flag booleana para true
+            tarefas[index].concluido = true;
+            console.log('✔ Parabéns! Tarefa marcada como concluída.');
+        } else {
+            console.log('⚠️ Número inválido!');
+        }
+        exibirMenu();
+    });
+}
    // ============================================================
    // 6. EXCLUIR TAREFA - Feito por: WESLEY
    // ============================================================-
